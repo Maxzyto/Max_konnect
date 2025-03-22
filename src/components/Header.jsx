@@ -2,6 +2,6 @@ import React from 'react'
 
 export const Header = () => {
   return (
-    <div>Header</div>
+    <div className='bg-blue-800'>Header</div>
   )
 }
