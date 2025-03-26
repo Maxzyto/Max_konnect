@@ -1,56 +1,59 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React from "react";
+import { Link } from "react-router-dom";
 
-const Navbar = () => {
-
-  const [user, setUser] = React.useState(null);
-
-  React.useEffect(() => {
-    // Simulate fetching user data
-    const loggedInUser = localStorage.getItem('user');
-    if (loggedInUser) {
-      setUser(JSON.parse(loggedInUser));
-    }
-  }, []);
-
-  const onLogout = () => {
-    localStorage.removeItem('user');
-    setUser(null);
-  };
+const Navbar = ({ user, onLogout }) => {
   return (
-    <div className='bg-blue-800 text-white p-4'>
-      <nav>
-        <ul>
+    <nav className="bg-black text-white w-60 h-screen fixed top-0 left-0 py-6 px-4 overflow-y-auto">
+      <ul className="flex flex-col h-full justify-between">
+        <div className="space-y-4">
           <li>
-            <Link to="/">Home</Link>
+            <Link to="/" className="block p-2 hover:bg-blue-800 rounded-md">
+              Dashboard
+            </Link>
           </li>
           <li>
-            <Link to="/history">History</Link>
+            <Link
+              to="/history"
+              className="block p-2 hover:bg-blue-800 rounded-md"
+            >
+              History
+            </Link>
           </li>
           <li>
-            <Link to="/upload">Upload</Link>
+            <Link
+              to="/upload"
+              className="block p-2 hover:bg-blue-800 rounded-md"
+            >
+              Upload
+            </Link>
           </li>
           <li>
-            <Link to="/chat">Chat</Link>
+            <Link to="/chat" className="block p-2 hover:bg-blue-800 rounded-md">
+              Chat
+            </Link>
           </li>
-          <li>
-            <Link to="/receipts">Receipts</Link>
-          </li>
-          <li>
-            <Link to="/login">Login</Link>
-          </li>
-          <li>
-            <Link to="/signup">Signup</Link>
-          </li>
-          {user && (
-            <li>
-              <button onClick={onLogout}>Logout</button>
-            </li>
-          )}
-        </ul>
-      </nav>
-    </div>
-  )
-}
+        </div>
 
-export default Navbar
+        <div className="pb-10">
+          {user ? (
+            <button
+              onClick={onLogout}
+              className="block w-full text-left p-2 hover:bg-blue-800 rounded-md"
+            >
+              Sign Out
+            </button>
+          ) : (
+            <Link
+              to="/login"
+              className="block p-2 hover:bg-blue-800 rounded-md"
+            >
+              Login
+            </Link>
+          )}
+        </div>
+      </ul>
+    </nav>
+  );
+};
+
+export default Navbar;
