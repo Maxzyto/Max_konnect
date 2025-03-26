@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 const Navbar = ({ user, onLogout }) => {
   return (
-    <nav className="bg-black text-white w-60 h-screen fixed top-0 left-0 py-6 px-4 overflow-y-auto">
+    <nav className="bg-black text-white w-60 h-[calc(100vh-4rem)] fixed top-16 left-0 py-6 px-4 overflow-y-auto">
       <ul className="flex flex-col h-full justify-between">
         <div className="space-y-4">
           <li>
@@ -31,6 +31,12 @@ const Navbar = ({ user, onLogout }) => {
             <Link to="/chat" className="block p-2 hover:bg-blue-800 rounded-md">
               Chat
             </Link>
+          </li>
+          <li>
+            <Link
+              to="/receipt">
+              Receipt
+              </Link>
           </li>
         </div>
 
