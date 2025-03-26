@@ -34,7 +34,7 @@ const Navbar = ({ user, onLogout }) => {
           </li>
           <li>
             <Link
-              to="/receipt">
+              to="/receipt" className="block p-2 hover:bg-blue-800 rounded-md">
               Receipt
               </Link>
           </li>
