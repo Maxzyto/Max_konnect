@@ -9,7 +9,7 @@ function Login({ onLogin }) {
     e.preventDefault();
 
     if (username && password) {
-      onLogin({ username: username, id: 1 }); // Replace with actual user data
+      onLogin({ username: username, id: 1 }); 
     } else {
       alert("Please enter username and password.");
     }
