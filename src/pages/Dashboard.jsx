@@ -15,11 +15,8 @@ const Dashboard = () => {
         backgroundBlendMode: "overlay",
       }}
     >
-      <h1 className="text-white text-6xl font-bold text-center">Welcome to Max Konnect</h1>
-      <div className="text-center mt-4 text-white text-xl">
-        <p>Connect with us for all your needs.</p>
-        <p>We are here to help you.</p>   
-      </div>
+      <h1 className="text-white text-6xl font-bold text-center mt-8">PRINTING <br/> CREATIVITY <br/> SOLUTION</h1>
+      
     </div>
   );
 }

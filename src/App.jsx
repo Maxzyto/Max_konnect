@@ -9,6 +9,7 @@ import History from './pages/History'
 import Upload from './pages/Upload'
 import Chat from './pages/Chat'
 import Receipt from './pages/Receipt'
+import Footer from './components/Footer'
 
 
 
@@ -32,6 +33,7 @@ function App() {
             <Route path="/login" element={<Login />} />
           </Routes>
         </div>
+        <Footer />
       </div>
     </BrowserRouter>
   );
