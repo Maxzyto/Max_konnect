@@ -14,12 +14,6 @@ function Header({ darkMode, setDarkMode, toggleSidebar }) {
   }
 
 
-  // Function to handle logout
-  const handleLogout = () => {
-    console.log("User logged out");
-  }
-
-
   return (
     <header className="bg-blue-800 p-2 flex justify-between items-center fixed top-0 left-0 w-full z-50">
       <div className="font-bold text-xl">
@@ -45,9 +39,6 @@ function Header({ darkMode, setDarkMode, toggleSidebar }) {
         </button>
         <button onClick={handleSidebarToggle} className="md:hidden text-white ">
           ☰
-        </button>
-        <button onClick={handleLogout} className="border rounded p-2 text-white">
-          Logout
         </button>
         
         <button onClick={handleSidebarToggle} className="hidden md:block text-white"></button>
