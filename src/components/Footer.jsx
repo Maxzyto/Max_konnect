@@ -3,11 +3,11 @@ import React from "react";
 
 function Footer() {
   return (
-    <footer className="bg-blue-800 p-4 flex justify-center text-white fixed bottom-0 w-full">
-      <div className="flex space-x-4 items-center">
+    <footer className="bg-blue-800 p-2 flex justify-center text-white fixed left-0 bottom-0 w-full z-50 border-rounded-tl-lg rounded-tr-lg">
+      <div className="flex space-x-4 items-center ml-[10rem]">
         <a
           href="mailto:konnectmax@gmail.com"
-          className="text-white hover:underline "
+          className="text-white hover:underline"
         >
           konnectmax@gmail.com
         </a>
