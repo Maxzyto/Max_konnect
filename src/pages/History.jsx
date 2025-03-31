@@ -11,15 +11,15 @@ function History({ history }) {
 
   const renderHistoryItems = () => {
     const items = [];
-    for (let i = 0; i < history.length; i++) {
-      const item = history[i];
+    history.forEach((item, index) => {
+      // Use forEach instead of for loop
       items.push(
         <li
           key={item.id}
           className="flex flex-col sm:flex-row items-start sm:items-center justify-between"
         >
           <span className="mb-1 sm:mb-0">
-            {i + 1}. {item.fileName}{" "}
+            {index + 1}. {item.fileName}{" "}
             <span className="text-sm">{item.date}</span>
           </span>
           <button
@@ -30,7 +30,7 @@ function History({ history }) {
           </button>
         </li>
       );
-    }
+    });
     return items;
   };
 
