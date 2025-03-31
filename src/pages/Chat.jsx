@@ -30,8 +30,50 @@ function Chat({ user }) {
     }
   };
 
+  const handleKeyPress = (e) => {
+    if (e.key === "Enter") {
+      handleSendMessage();
+    }
+  }
+
+  const handleFileUpload = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setMessages([
+          ...messages,
+          {
+            text: `File uploaded: ${file.name}`,
+            sender: "user",
+            image: user?.image || "default.jpg",
+          },
+        ]);
+      };
+      reader.readAsDataURL(file);
+    }
+  }
+  const handleImageUpload = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setMessages([
+          ...messages,
+          {
+            text: `Image uploaded: ${file.name}`,
+            sender: "user",
+            image: user?.image || "default.jpg",
+          },
+        ]);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+
   return (
-    <div className="bg-black text-white p-4 flex flex-col h-full">
+    <div className="bg-black text-white p-4 flex flex-col h-100vh w-100vw rounded-lg shadow-lg">
       <h2 className="text-xl font-semibold mb-4 text-center">
         Chat with the team
       </h2>
@@ -76,10 +118,11 @@ function Chat({ user }) {
           value={newMessage}
           onChange={(e) => setNewMessage(e.target.value)}
           placeholder="Write Something..."
+          onKeyDown={handleKeyPress}
           className="flex-1 bg-transparent border-none outline-none text-white placeholder-gray-300"
         />
         <button className="text-white ml-2">📎</button>
-        <button className="text-white ml-2">📷</button>
+        <button className="text-white ml-2" onClick={handleImageUpload}>📷</button>
         <button className="text-white ml-2">🙂</button>
         <button onClick={handleSendMessage} className="text-white ml-2">
           ➤
