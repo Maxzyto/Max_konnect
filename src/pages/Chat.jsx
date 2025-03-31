@@ -9,7 +9,7 @@ function Chat({ user }) {
       image: "/public/team1.jpg",
     },
     {
-      text: "Hi, thank for choosing Max Kennect",
+      text: "Hi, thank for your service",
       sender: "user",
       image: "/public/user1.jpg",
     },
@@ -18,7 +18,7 @@ function Chat({ user }) {
 
   const handleSendMessage = () => {
     if (newMessage.trim()) {
-      setMessages([
+      setMessages([   
         ...messages,
         {
           text: newMessage,
@@ -121,7 +121,7 @@ function Chat({ user }) {
           onKeyDown={handleKeyPress}
           className="flex-1 bg-transparent border-none outline-none text-white placeholder-gray-300"
         />
-        <button className="text-white ml-2">📎</button>
+        <button className="text-white ml-2" onClick={handleFileUpload}>📎</button>
         <button className="text-white ml-2" onClick={handleImageUpload}>📷</button>
         <button className="text-white ml-2">🙂</button>
         <button onClick={handleSendMessage} className="text-white ml-2">
