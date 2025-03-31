@@ -5,7 +5,7 @@ function History({ history = [], onDelete }) {
   const navigate = useNavigate();
 
   const handleReceiptClick = (receipt) => {
-    navigate("/receipt", { state: { receipt } });
+    navigate("./Receipt.jsx", { state: { receipt } });
   };
 
   return (
