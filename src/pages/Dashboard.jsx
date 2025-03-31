@@ -15,7 +15,7 @@ const Dashboard = () => {
         backgroundBlendMode: "overlay",
         overflow: "hidden",
         position: "fixed",
-        zIndex: 0,
+        zIndex: -1,
         width: "100%",
         height: "100%",
         top: 0,
