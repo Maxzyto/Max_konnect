@@ -32,12 +32,12 @@ function Upload({ onUploadComplete }) {
     e.preventDefault();
     if (files.length > 0) {
       files.forEach((file) => {
-        const fileDetails = {
+        const uploadFiles = {
           fileName: file.name,
           date: new Date().toLocaleDateString(),
           id: Date.now(),
         };
-        onUploadComplete(fileDetails);
+        onUploadComplete(uploadFiles);
       });
       setFiles([]); // Clear the files after upload
     }
