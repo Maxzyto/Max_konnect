@@ -24,7 +24,7 @@ const Dashboard = () => {
         justifyContent: "center",
       }}
     >
-      <h1 className="text-pink-600 text-9xl font-bold p-20 text-center mt-6 ml-8  stroke-gray-200">
+      <h1 className="text-white text-9xl font-bold p-20 text-center mt-6 ml-8  stroke-gray-200">
         PRINTING <br /> CREATIVITY <br /> SOLUTION
       </h1>
     </div>
