@@ -5,7 +5,7 @@ const Dashboard = () => {
 
   return (
     <div
-      className="p-4 h-screen w-screen scroll-m-0 bg-transparent overflow-clip flex flex-col items-center justify-center"
+      className="p-4 h-screen w-screen scroll-m-0  bg-transparent overflow-clip flex flex-col items-center justify-center"
       style={{
         backgroundImage: "url('/pngwing.com.png')",
         backgroundSize: "cover",
@@ -22,10 +22,11 @@ const Dashboard = () => {
         left: 0,
         display: "flex",
         justifyContent: "center",
-
       }}
     >
-      <h1 className="text-white text-6xl font-bold p-20 text-center mt-6">PRINTING <br/> CREATIVITY <br/> SOLUTION</h1>
+      <h1 className="text-pink-600 text-9xl font-bold p-20 text-center mt-6 ml-8  stroke-gray-200">
+        PRINTING <br /> CREATIVITY <br /> SOLUTION
+      </h1>
     </div>
   );
 }
