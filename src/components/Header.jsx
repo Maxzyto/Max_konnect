@@ -1,16 +1,23 @@
 // src/components/Header.jsx
 import React from "react";
+import { useState } from 'react';
 
-function Header({ darkMode, setDarkMode, toggleSidebar }) {
+function Header() {
+  const [darkMode, setDarkMode] = useState(false);
+  const [isSidebarOpen, setSidebarOpen] = useState(false);
 
   // Function to toggle dark mode
   const handleDarkModeToggle = () => {
     setDarkMode(!darkMode);
-  }
+  };
+  
+
+
   
   // Function to toggle sidebar visibility
-  const handleSidebarToggle = () => {
-    toggleSidebar();
+ const handleSidebarToggle = () => {
+   setSidebarOpen(!isSidebarOpen);
+   
   }
 
 

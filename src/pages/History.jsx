@@ -1,5 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import Receipt from './Receipt';
 
 function History({ history = [], onDelete }) {
   const navigate = useNavigate();

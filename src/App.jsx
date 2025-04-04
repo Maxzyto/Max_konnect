@@ -16,53 +16,58 @@ function App() {
   const [user, setUser] = useState(null);
   const [history, setHistory] = useState([]);
   const [selectedReceipt, setSelectedReceipt] = useState(null);
-  // const [darMode, setDarkMode] = useState(false);
-  // const [isSidebarOpen, setSidebarOpen] = useState(false);
-  // const [isMobile, setIsMobile] = useState(false);
+  const [darkMode, setDarkMode] = useState(false);
+  const [isSidebarOpen, setSidebarOpen] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
 
-  const handleLogin = (user) => {
-    setUser(user);
-  }
+    const handleLogin = (userData) => {
+      setUser(userData);
+    };
 
-  const handleUploadComplete =(uploadedFile) => {
-    setHistory((prevHistory) => [...prevHistory, uploadedFile]);
-  }
-  const handleReceiptSelect = (receipt) => {
-    setSelectedReceipt(receipt);
-  }
-  // const handleDarkModeToggle = () => {
-  //   setDarkMode(!darkMode);
-  // }
-  // const handleSidebarToggle = () => {
-  //   setSidebarOpen(!isSidebarOpen);
-  // }
-  // const handleMobileToggle = () => {
-  //   setIsMobile(!isMobile);
-  // }
+    const handleLogout = () => {
+      setUser(null);
+    };
 
-  
+    const handleUploadComplete = (uploadedFiles) => {
+      setHistory([...history, ...uploadedFiles]);
+      // After updating history, navigate to the receipt page with the last uploaded file
+      if (uploadedFiles.length > 0) {
+        navigate("/receipt", {
+          state: { receipt: uploadedFiles[uploadedFiles.length - 1] },
+        });
+      }
+    };
 
-  return (
-    <BrowserRouter>
-      <div className="flex">
-        <Headers />
-        <div className="hidden md:block w-60 bg-gray-800 h-screen fixed top-0 left-0">
-          <Navbar />
+    const handleReceiptClick = (receipt) => {
+      setSelectedReceipt(receipt);
+    };
+
+    const toggleSidebar = () => {
+      setIsSidebarOpen(!isSidebarOpen);
+    };
+
+    return (
+      <BrowserRouter>
+        <div className="min-h-screen flex flex-col">
+          <Header darkMode={darkMode} setDarkMode={setDarkMode} toggleSidebar={toggleSidebar} />
+          <div className="flex flex-1">
+            <Sidebar user={user} onLogout={handleLogout} isSidebarOpen={isSidebarOpen} />
+            <div className="flex-1 flex flex-col">
+              <Routes>
+                <Route path="/" element={<DashboardContent />} />
+                <Route path="/dashboard" element={<Dashboard user={user} onLogin={handleLogin} onLogout={handleLogout} history={history} onUploadComplete={handleUploadComplete} onReceiptClick={handleReceiptClick} selectedReceipt={selectedReceipt} />} />
+                <Route path="/history" element={<History history={history} onReceiptClick={handleReceiptClick} />} />
+                <Route path="/upload" element={<Upload onUploadComplete={handleUploadComplete} />} />
+                <Route path="/chat" element={<Chat user={user} />} />
+                <Route path="/receipt" element={<Receipt />} /> {/* Receipt component will get data from location state */}
+                <Route path="/login" element={<Login onLogin={handleLogin} />} />
+              </Routes>
+            </div>
+          </div>
+          <Footer />
         </div>
-        <div className="ml-60 p-4 w-full mt-6">
-          <Routes>
-            <Route path="/dashboard" element={<Dashboard user={user} onLogin={handleLogin} history={history} onUploadComplete={handleUploadComplete} onReceiptClick={handleReceiptSelect} selectedReceipt={selectedReceipt} />} />
-            <Route path="/history" element={<History history={history} onReceiptClick={ handleReceiptSelect} />} />
-            <Route path="/upload" element={<Upload onUploadComplete={handleUploadComplete}/>} />
-            <Route path="/chat" element={<Chat />} />
-            <Route path="/receipt" element={<Receipt receipt={selectedReceipt} onClose={() => setSelectedReceipt(null)} />} />
-            <Route path="/login" element={<Login onLogin={handleLogin} />} />
-          </Routes>
-        </div>
-        <Footer />
-      </div>
-    </BrowserRouter>
-  );
+      </BrowserRouter>
+    );
 
-  }
+}
 export default App;
