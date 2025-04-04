@@ -2,11 +2,11 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import Receipt from './Receipt';
 
-function History({ history = [], onDelete }) {
+function History({ history }) {
   const navigate = useNavigate();
 
   const handleReceiptClick = (receipt) => {
-    navigate("./Receipt.jsx", { state: { receipt } });
+    navigate("/receipt", { state: { receipt } });
   };
 
   return (

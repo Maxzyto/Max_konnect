@@ -3,13 +3,14 @@ import './App.css'
 import Dashboard from './pages/Dashboard'
 import  Login  from './pages/Login'
 import Headers from './components/Header'
-import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import { BrowserRouter, Route, Routes, useNavigate } from 'react-router-dom'
 import Navbar from './components/Navbar'
 import History from './pages/History' 
 import Upload from './pages/Upload'
 import Chat from './pages/Chat'
 import Receipt from './pages/Receipt'
 import Footer from './components/Footer'
+// import Sidebar from './components/Sidebar'
 
 function App() {
   
@@ -18,7 +19,8 @@ function App() {
   const [selectedReceipt, setSelectedReceipt] = useState(null);
   const [darkMode, setDarkMode] = useState(false);
   const [isSidebarOpen, setSidebarOpen] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
+  // const [isMobile, setIsMobile] = useState(false);
+  const navigate = useNavigate();
 
     const handleLogin = (userData) => {
       setUser(userData);
@@ -43,7 +45,7 @@ function App() {
     };
 
     const toggleSidebar = () => {
-      setIsSidebarOpen(!isSidebarOpen);
+      setSidebarOpen(!isSidebarOpen);
     };
 
     return (
