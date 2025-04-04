@@ -67,7 +67,7 @@ function Receipt() {
         <p>
           <strong>Color:</strong> {receipt.color || "N/A"}
         </p>
-        {/* Add other receipt details as needed */}
+        {/* will be adding more details in the feature */}
       </div>
       <div className="flex flex-col sm:flex-row justify-center mt-4 space-y-2 sm:space-y-0 sm:space-x-2">
         <button
