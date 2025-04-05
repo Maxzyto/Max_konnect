@@ -1,11 +1,10 @@
 // src/components/Receipt.jsx
 import React from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
-function Receipt() {
-  const location = useLocation();
-  const navigate = useNavigate();
-  const receipt = location.state?.receipt;
+function Receipt({ receipt }) {
+const navigate = useNavigate();
+  
 
   const handlePrint = () => {
     window.print();

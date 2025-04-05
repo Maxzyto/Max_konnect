@@ -27,6 +27,7 @@ const Navbar = ({ user, onLogout }) => {
               <Link
                 to="/dashboard"
                 className="block p-2 hover:bg-blue-800 rounded-md"
+                
               >
                 Dashboard
               </Link>

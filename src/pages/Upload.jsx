@@ -44,25 +44,20 @@ function Upload({ onUploadComplete }) {
   };
 
   return (
-    <div className="bg-white p-4 sm:p-6 rounded shadow-md">
-      {" "}
-      {/* Add responsive padding */}
-      <h2 className="text-xl sm:text-2xl font-semibold mb-4">
-        Upload all you files here for printing
-      </h2>{" "}
-      {/* Responsive font size */}
+    <div className="bg-white p-6 mt-6 sm:p-6 rounded shadow-md w-full h-full flex flex-col">
+      <h2 className="text-xl sm:text-2xl font-bold">
+        Upload all your files here for printing
+      </h2>
       <div
-        className="border-2 border-dashed rounded p-4 sm:p-8 mb-4 flex flex-col items-center justify-center" // Responsive padding
+        className="border-2 border-dashed rounded p-4 sm:p-8 mb-4 flex flex-col items-center justify-center flex-grow"
         onDrop={handleDrop}
         onDragOver={handleDragOver}
       >
         <div className="text-center">
           <div className="w-16 h-16 sm:w-20 sm:h-20 bg-yellow-200 rounded-full flex items-center justify-center mb-4">
-            {" "}
-            {/* Responsive size */}
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              className="h-8 w-8 sm:h-10 sm:w-10 text-yellow-500" // Responsive size
+              className="h-8 w-8 sm:h-10 sm:w-10 text-yellow-500"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
@@ -94,20 +89,19 @@ function Upload({ onUploadComplete }) {
           </p>
         </div>
       </div>
-      {files.length > 0 && (
-        <div>
-          <h3 className="text-lg font-semibold mb-2">Uploading files</h3>
+    </div>
+    {
+    files.length > 0
+    && (
+      <div className="flex-grow overflow-auto">
+          <h3 className="text-lg font-bold mb-2">Uploading files</h3>
           <ul>
             {files.map((file, index) => (
               <li
                 key={index}
                 className="flex flex-col sm:flex-row items-start sm:items-center justify-between border-b py-2"
               >
-                {" "}
-                {/* Responsive flex direction */}
                 <span className="flex items-center mb-1 sm:mb-0">
-                  {" "}
-                  {/* Responsive margin */}
                   {file.type.includes("pdf") && (
                     <span className="text-red-500 mr-2">PDF</span>
                   )}
@@ -131,13 +125,11 @@ function Upload({ onUploadComplete }) {
           <button
             onClick={handleSubmit}
             className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mt-4"
-          >
+           >
             Upload
-          </button>
+           </button>
         </div>
       )}
-    </div>
-  );
 }
 
 export default Upload;

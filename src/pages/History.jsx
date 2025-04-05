@@ -10,7 +10,7 @@ function History({ history }) {
   };
 
    return (
-        <div className="bg-white p-4 rounded shadow-md">
+        <div className="bg-white p-10 mt-12 ml-10 rounded shadow-md">
             <h2 className="text-xl sm:text-2xl font-semibold mb-4 text-center">Print history</h2>
             <div className="bg-gray-100 p-4 rounded-lg border-2 border-pink-400">
                 <ul className="space-y-2">
