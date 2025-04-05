@@ -73,18 +73,17 @@ function Chat({ user }) {
 
 
   return (
-    <div className="flex h-100vh  ">
+    <div className="flex w-1/2 mt-2 h-screen position:relative place-self-center mb-10 z-0">
       {/* Sidebar / Navbar */}
-      <div className="w-1/4 bg-gray-800 text-white p-2 ml-6">
-        <h2 className="text-lg font-semibold mb-4">Navbar</h2>
-        {/* Add your navbar content here */}
-      </div>
+      <div className=" bg-gray-800 text-white "></div>
 
       {/* Main Chat Section */}
       <div className="flex-1 flex h-100% flex-col bg-black text-white">
         {/* Header */}
         <div className="bg-gray-900 p-4 shadow-md">
-          <h2 className="text-xl font-semibold text-center">Chat with the team</h2>
+          <h2 className="text-xl font-semibold text-center">
+            Chat with the team
+          </h2>
         </div>
 
         {/* Chat Messages */}
@@ -140,7 +139,10 @@ function Chat({ user }) {
             id="file-upload"
             onChange={handleFileUpload}
           />
-          <label htmlFor="file-upload" className="text-white ml-2 cursor-pointer">
+          <label
+            htmlFor="file-upload"
+            className="text-white ml-2 cursor-pointer"
+          >
             📎
           </label>
           <input
@@ -150,7 +152,10 @@ function Chat({ user }) {
             id="image-upload"
             onChange={handleImageUpload}
           />
-          <label htmlFor="image-upload" className="text-white ml-2 cursor-pointer">
+          <label
+            htmlFor="image-upload"
+            className="text-white ml-2 cursor-pointer"
+          >
             📷
           </label>
           <button className="text-white ml-2">🙂</button>

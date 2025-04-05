@@ -125,7 +125,7 @@ function FileUploadPage() {
 
   return (
     <div className=" p-6 md:p-12 flex-1 bg-gray-50 ml-20 z-0 mt-12 rounded shadow-md">
-      <h1 className="text-3xl font-bold text-gray-800 mb-6">
+      <h1 className="text-3xl font-bold text-gray-800 mb-6 text-center">
         Upload Your Files
       </h1>
 

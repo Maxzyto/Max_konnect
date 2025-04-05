@@ -12,7 +12,7 @@ const navigate = useNavigate();
 
   if (!receipt) {
     return (
-      <div className="bg-white p-4 sm:p-6 rounded shadow-md">
+      <div className="bg-white p-4 sm:p-6 w-1/2 rounded shadow-md ml-40 flex flex-col place-self-center z-0 mt-12">
         <h2 className="text-xl sm:text-2xl font-semibold mb-4 text-center">
           Receipt
         </h2>
