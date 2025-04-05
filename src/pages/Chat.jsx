@@ -73,60 +73,91 @@ function Chat({ user }) {
 
 
   return (
-    <div className="bg-black text-white p-4 flex flex-col h-100vh w-100vw rounded-lg shadow-lg">
-      <h2 className="text-xl font-semibold mb-4 text-center">
-        Chat with the team
-      </h2>
-      <div className="flex-1 overflow-y-auto space-y-4">
-        {messages.map((message, index) => (
-          <div
-            key={index}
-            className={`flex ${
-              message.sender === "user" ? "justify-end" : "justify-start"
-            }`}
-          >
-            <div className="flex items-start">
-              {message.sender === "team" && (
-                <img
-                  src={message.image}
-                  alt="Team"
-                  className="w-10 h-10 rounded-full mr-2"
-                />
-              )}
-              <div
-                className={`rounded-lg p-2 ${
-                  message.sender === "user" ? "bg-blue-600" : "bg-gray-700"
-                }`}
-              >
-                {message.text}
-              </div>
-              {message.sender === "user" && (
-                <img
-                  src={message.image}
-                  alt="User"
-                  className="w-10 h-10 rounded-full ml-2"
-                />
-              )}
-            </div>
-          </div>
-        ))}
+    <div className="flex h-100vh  ">
+      {/* Sidebar / Navbar */}
+      <div className="w-1/4 bg-gray-800 text-white p-2 ml-6">
+        <h2 className="text-lg font-semibold mb-4">Navbar</h2>
+        {/* Add your navbar content here */}
       </div>
-      <div className="mt-4 flex items-center bg-pink-500 rounded-lg p-2">
-        <button className="text-white mr-2">🎤</button>
-        <input
-          type="text"
-          value={newMessage}
-          onChange={(e) => setNewMessage(e.target.value)}
-          placeholder="Write Something..."
-          onKeyDown={handleKeyPress}
-          className="flex-1 bg-transparent border-none outline-none text-white placeholder-gray-300"
-        />
-        <button className="text-white ml-2" onClick={handleFileUpload}>📎</button>
-        <button className="text-white ml-2" onClick={handleImageUpload}>📷</button>
-        <button className="text-white ml-2">🙂</button>
-        <button onClick={handleSendMessage} className="text-white ml-2">
-          ➤
-        </button>
+
+      {/* Main Chat Section */}
+      <div className="flex-1 flex h-100% flex-col bg-black text-white">
+        {/* Header */}
+        <div className="bg-gray-900 p-4 shadow-md">
+          <h2 className="text-xl font-semibold text-center">Chat with the team</h2>
+        </div>
+
+        {/* Chat Messages */}
+        <div className="flex-1 overflow-y-auto p-4 space-y-4">
+          {messages.map((message, index) => (
+            <div
+              key={index}
+              className={`flex ${
+                message.sender === "user" ? "justify-end" : "justify-start"
+              }`}
+            >
+              <div className="flex items-start">
+                {message.sender === "team" && (
+                  <img
+                    src={message.image}
+                    alt="Team"
+                    className="w-10 h-10 rounded-full mr-2"
+                  />
+                )}
+                <div
+                  className={`rounded-lg p-2 ${
+                    message.sender === "user" ? "bg-blue-600" : "bg-gray-700"
+                  }`}
+                >
+                  {message.text}
+                </div>
+                {message.sender === "user" && (
+                  <img
+                    src={message.image}
+                    alt="User"
+                    className="w-10 h-10 rounded-full ml-2"
+                  />
+                )}
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Input Section */}
+        <div className="mt-4 flex items-center bg-pink-500 rounded-lg p-2">
+          <button className="text-white mr-2">🎤</button>
+          <input
+            type="text"
+            value={newMessage}
+            onChange={(e) => setNewMessage(e.target.value)}
+            placeholder="Write Something..."
+            onKeyDown={handleKeyPress}
+            className="flex-1 bg-transparent border-none outline-none text-white placeholder-gray-300"
+          />
+          <input
+            type="file"
+            className="hidden"
+            id="file-upload"
+            onChange={handleFileUpload}
+          />
+          <label htmlFor="file-upload" className="text-white ml-2 cursor-pointer">
+            📎
+          </label>
+          <input
+            type="file"
+            accept="image/*"
+            className="hidden"
+            id="image-upload"
+            onChange={handleImageUpload}
+          />
+          <label htmlFor="image-upload" className="text-white ml-2 cursor-pointer">
+            📷
+          </label>
+          <button className="text-white ml-2">🙂</button>
+          <button onClick={handleSendMessage} className="text-white ml-2">
+            ➤
+          </button>
+        </div>
       </div>
     </div>
   );

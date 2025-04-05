@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { FiMenu, FiX, FaChartLine } from "react-icons/fa"; // Import icons
+import { FiMenu, FiX } from "react-icons/fi"; // Feather icons
+import { FaChartLine } from "react-icons/fa"; // Import icons
 
 const Navbar = ({ user, onLogout }) => {
   const [isOpen, setIsOpen] = useState(false); // State to toggle menu

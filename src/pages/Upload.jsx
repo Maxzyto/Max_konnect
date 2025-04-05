@@ -1,135 +1,239 @@
-// src/components/Upload.jsx
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useCallback } from "react";
+import { useNavigate } from "react-router-dom";
+import useFileStore from "../store/fileStore"; // Ensure this path is correct
+import {
+  FaUpload,
+  FaTimesCircle,
+  FaCheckCircle,
+  FaSpinner,
+} from "react-icons/fa";
 
-function Upload({ onUploadComplete }) {
-  const [files, setFiles] = useState([]);
+// Helper to format bytes (reuse from store or define here)
+const formatBytes = (bytes, decimals = 2) => {
+  if (!+bytes) return "0 Bytes";
+  const k = 1024;
+  const dm = decimals < 0 ? 0 : decimals;
+  const sizes = ["Bytes", "KB", "MB", "GB", "TB"];
+  const i = Math.floor(Math.log(bytes) / Math.log(k));
+  return `${parseFloat((bytes / Math.pow(k, i)).toFixed(dm))} ${sizes[i]}`;
+};
+
+function FileUploadPage() {
+  const navigate = useNavigate();
+  const { addTemporalFile, removeTemporalFile, confirmUpload, temporalFiles } =
+    useFileStore();
+  const [isDragging, setIsDragging] = useState(false);
+  const [uploadingId, setUploadingId] = useState(null); // Track which file is being "uploaded"
+  const [error, setError] = useState("");
   const fileInputRef = useRef(null);
 
-  const handleFileChange = (e) => {
-    const selectedFiles = Array.from(e.target.files);
-    setFiles([...files, ...selectedFiles]);
+  const handleFiles = useCallback(
+    (files) => {
+      setError("");
+      setUploadingId(null); // Clear previous upload state
+      if (!files || files.length === 0) return;
+
+      // Basic validation (example: allow only PDFs and images)
+      const allowedTypes = [
+        "application/pdf",
+        "image/jpeg",
+        "image/png",
+        "image/gif",
+      ];
+      const file = files[0]; // Handle one file at a time for simplicity
+
+      if (!allowedTypes.includes(file.type)) {
+        setError(
+          `Invalid file type: ${file.type}. Please upload PDF or image files.`
+        );
+        return;
+      }
+      if (file.size > 10 * 1024 * 1024) {
+        // Example: 10MB limit
+        setError(
+          `File is too large: ${formatBytes(file.size)}. Maximum size is 10MB.`
+        );
+        return;
+      }
+
+      // Add to temporal store (in-memory simulation)
+      addTemporalFile(file);
+    },
+    [addTemporalFile]
+  );
+
+  const handleDragEnter = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDragging(true);
   };
 
-  const handleDrop = (e) => {
+  const handleDragLeave = (e) => {
     e.preventDefault();
-    const droppedFiles = Array.from(e.dataTransfer.files);
-    setFiles([...files, ...droppedFiles]);
+    e.stopPropagation();
+    setIsDragging(false);
   };
 
   const handleDragOver = (e) => {
     e.preventDefault();
+    e.stopPropagation();
+    setIsDragging(true); // Keep highlighting while dragging over
   };
 
-  const handleRemoveFile = (index) => {
-    setFiles(files.filter((_, i) => i !== index));
-  };
-
-  const handleBrowseClick = () => {
-    fileInputRef.current.click();
-  };
-
-  const handleSubmit = (e) => {
+  const handleDrop = (e) => {
     e.preventDefault();
-    if (files.length > 0) {
-      files.forEach((file) => {
-        const uploadFiles = {
-          fileName: file.name,
-          date: new Date().toLocaleDateString(),
-          id: Date.now(),
-        };
-        onUploadComplete(uploadFiles);
-      });
-      setFiles([]); // Clear the files after upload
+    e.stopPropagation();
+    setIsDragging(false);
+    const files = e.dataTransfer.files;
+    handleFiles(files);
+  };
+
+  const handleFileInputChange = (e) => {
+    const files = e.target.files;
+    handleFiles(files);
+    // Reset file input to allow uploading the same file again
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
     }
   };
 
+  const handleRemoveFile = (tempId) => {
+    removeTemporalFile(tempId);
+    if (uploadingId === tempId) setUploadingId(null); // Clear upload state if removing the uploading file
+  };
+
+  const handleConfirmUpload = async (tempId) => {
+    setUploadingId(tempId); // Show spinner
+    setError("");
+
+    // Simulate API call delay
+    await new Promise((resolve) => setTimeout(resolve, 1500));
+
+    const receiptId = confirmUpload(tempId); // Process in store
+    setUploadingId(null); // Hide spinner
+
+    if (receiptId) {
+      // Navigate to the generated receipt page
+      navigate(`/receipts/${receiptId}`);
+    } else {
+      setError("Upload failed. Could not find the file reference.");
+      // Keep the file in the temporal list for retry or removal if needed
+    }
+  };
+
+  const temporalFileIds = Object.keys(temporalFiles); // Get current temporal file IDs
+
   return (
-    <div className="bg-white p-6 mt-6 sm:p-6 rounded shadow-md w-full h-full flex flex-col">
-      <h2 className="text-xl sm:text-2xl font-bold">
-        Upload all your files here for printing
-      </h2>
-      <div
-        className="border-2 border-dashed rounded p-4 sm:p-8 mb-4 flex flex-col items-center justify-center flex-grow"
-        onDrop={handleDrop}
-        onDragOver={handleDragOver}
-      >
-        <div className="text-center">
-          <div className="w-16 h-16 sm:w-20 sm:h-20 bg-yellow-200 rounded-full flex items-center justify-center mb-4">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-8 w-8 sm:h-10 sm:w-10 text-yellow-500"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L4 8m4-4v12"
-              />
-            </svg>
-          </div>
-          <p className="mb-2">Drag and Drop files to upload</p>
-          <button
-            onClick={handleBrowseClick}
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-          >
-            Browse
-          </button>
-          <input
-            type="file"
-            multiple
-            onChange={handleFileChange}
-            ref={fileInputRef}
-            className="hidden"
-          />
-          <p className="mt-2 text-sm text-gray-500">
-            Supported files: AI, PSD, PDF, JPEG, Word, EXL, and PNG
-          </p>
-        </div>
-      </div>
-    </div>
-    {
-    files.length > 0
-    && (
-      <div className="flex-grow overflow-auto">
-          <h3 className="text-lg font-bold mb-2">Uploading files</h3>
-          <ul>
-            {files.map((file, index) => (
-              <li
-                key={index}
-                className="flex flex-col sm:flex-row items-start sm:items-center justify-between border-b py-2"
-              >
-                <span className="flex items-center mb-1 sm:mb-0">
-                  {file.type.includes("pdf") && (
-                    <span className="text-red-500 mr-2">PDF</span>
-                  )}
-                  {file.type.includes("image") && (
-                    <span className="text-orange-500 mr-2">IMG</span>
-                  )}
-                  {file.type.includes("photoshop") && (
-                    <span className="text-blue-500 mr-2">PS</span>
-                  )}
-                  {file.name}
-                </span>
-                <button
-                  onClick={() => handleRemoveFile(index)}
-                  className="text-red-500"
-                >
-                  X
-                </button>
-              </li>
-            ))}
-          </ul>
-          <button
-            onClick={handleSubmit}
-            className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mt-4"
-           >
-            Upload
-           </button>
+    <div className=" p-6 md:p-12 flex-1 bg-gray-50 ml-20 z-0 mt-12 rounded shadow-md">
+      <h1 className="text-3xl font-bold text-gray-800 mb-6">
+        Upload Your Files
+      </h1>
+
+      {error && (
+        <div className="mb-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded">
+          {error}
         </div>
       )}
+
+      {/* Dropzone */}
+      <div
+        onDragEnter={handleDragEnter}
+        onDragLeave={handleDragLeave}
+        onDragOver={handleDragOver}
+        onDrop={handleDrop}
+        onClick={() => fileInputRef.current?.click()} // Trigger file input click
+        className={`border-2 border-dashed rounded-lg p-8 md:p-12 text-center cursor-pointer transition-colors duration-200 ${
+          isDragging
+            ? "border-cyan-500 bg-cyan-50"
+            : "border-gray-300 hover:border-cyan-400 hover:bg-gray-100"
+        }`}
+      >
+        <input
+          type="file"
+          ref={fileInputRef}
+          onChange={handleFileInputChange}
+          className="hidden"
+          accept=".pdf, image/jpeg, image/png, image/gif" // Match allowed types
+        />
+        <FaUpload
+          className={`mx-auto text-4xl mb-3 ${
+            isDragging ? "text-cyan-600" : "text-gray-400"
+          }`}
+        />
+        <p className="text-lg font-semibold text-gray-700">
+          {isDragging
+            ? "Drop files here!"
+            : "Drag & drop files here or click to browse"}
+        </p>
+        <p className="text-sm text-gray-500 mt-1">
+          Supports: PDF, JPG, PNG, GIF (Max 10MB)
+        </p>
+        <p className="text-xs text-gray-500 mt-2">
+          (Handles one file at a time in this demo)
+        </p>
+      </div>
+
+      {/* Files Ready for Upload */}
+      {temporalFileIds.length > 0 && (
+        <div className="mt-8">
+          <h2 className="text-xl font-semibold text-gray-700 mb-4">
+            Files Ready to Upload:
+          </h2>
+          <ul className="space-y-3">
+            {temporalFileIds.map((tempId) => {
+              const item = temporalFiles[tempId];
+              if (!item) return null; // Should not happen, but good practice
+              const isCurrentlyUploading = uploadingId === tempId;
+              return (
+                <li
+                  key={tempId}
+                  className="flex items-center justify-between p-3 bg-white border border-gray-200 rounded-md shadow-sm"
+                >
+                  <div className="flex items-center space-x-3 overflow-hidden">
+                    {/* Placeholder Icon - could show image thumbnail if desired */}
+                    <span className="flex-shrink-0 w-8 h-8 bg-gray-200 rounded flex items-center justify-center text-gray-500 text-xs">
+                      {item.type.split("/")[1]?.substring(0, 3).toUpperCase() ||
+                        "FILE"}
+                    </span>
+                    <div className="flex-1 min-w-0">
+                      <p className="text-sm font-medium text-gray-900 truncate">
+                        {item.name}
+                      </p>
+                      <p className="text-xs text-gray-500">
+                        {formatBytes(item.size)}
+                      </p>
+                    </div>
+                  </div>
+                  <div className="flex items-center space-x-3 flex-shrink-0">
+                    {isCurrentlyUploading ? (
+                      <FaSpinner className="animate-spin text-cyan-500 text-lg" />
+                    ) : (
+                      <>
+                        <button
+                          onClick={() => handleConfirmUpload(tempId)}
+                          className="p-1 text-green-500 hover:text-green-700 transition-colors"
+                          title="Confirm Upload"
+                        >
+                          <FaCheckCircle className="w-5 h-5" />
+                        </button>
+                        <button
+                          onClick={() => handleRemoveFile(tempId)}
+                          className="p-1 text-red-500 hover:text-red-700 transition-colors"
+                          title="Remove"
+                        >
+                          <FaTimesCircle className="w-5 h-5" />
+                        </button>
+                      </>
+                    )}
+                  </div>
+                </li>
+              );
+            })}
+          </ul>
+        </div>
+      )}
+    </div>
+  );
 }
 
-export default Upload;
+export default FileUploadPage;
