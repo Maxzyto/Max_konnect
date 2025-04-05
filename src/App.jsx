@@ -10,7 +10,7 @@ import Upload from './pages/Upload'
 import Chat from './pages/Chat'
 import Receipt from './pages/Receipt'
 import Footer from './components/Footer'
-// import Sidebar from './components/Sidebar'
+import Sidebar from './components/Sidebar'
 
 function App() {
   
