@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { FiMenu, FiX } from "react-icons/fi"; // Import icons
+import { FiMenu, FiX, FaChartLine } from "react-icons/fa"; // Import icons
 
 const Navbar = ({ user, onLogout }) => {
   const [isOpen, setIsOpen] = useState(false); // State to toggle menu
@@ -27,7 +27,7 @@ const Navbar = ({ user, onLogout }) => {
               <Link
                 to="/dashboard"
                 className="block p-2 hover:bg-blue-800 rounded-md"
-                
+                icon={<FaChartLine />}
               >
                 Dashboard
               </Link>

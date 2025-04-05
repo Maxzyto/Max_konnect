@@ -9,7 +9,10 @@ import Chat from './pages/Chat'
 import Receipt from './pages/Receipt'
 import Footer from './components/Footer'
 import Sidebar from './components/Sidebar'
+<<<<<<< HEAD
 import Navbar from './components/Navbar'
+=======
+>>>>>>> 4308ca30e55773ec0b5a143dbca77026ae7d6ef3
 
 function App() {
   
