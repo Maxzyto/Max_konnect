@@ -1,6 +1,16 @@
 import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
 
+/**
+ * @typedef {Object} UiStoreState
+ * @property {"light" | "dark"} theme
+ * @property {() => void} toggleTheme
+ * @property {(themeValue: "light" | "dark") => void} setTheme
+ * @property {boolean} isMobileSidebarOpen
+ * @property {() => void} toggleMobileSidebar
+ * @property {() => void} closeMobileSidebar
+ */
+
 const useUiStore = create(
   persist(
     (set, get) => ({
@@ -19,16 +29,14 @@ const useUiStore = create(
     {
       name: "ui-settings", // Unique name for storage
       storage: createJSONStorage(() => localStorage),
-      partialize: (state) => ({
-        theme: state.theme, // Only persist the theme setting
-      }),
+      partialize: (state) => ({ theme: state.theme }), // Only persist the theme setting
     }
   )
 );
 
-// Function to apply theme class on initial load and when theme changes
-export const applyTheme = () => {
-  const currentTheme = useUiStore.getState().theme;
+
+const applyTheme = () => {
+  const currentTheme = /** @type {"light" | "dark"} */ (useUiStore.getState().theme);
   const root = document.documentElement; // Get the <html> element
   if (currentTheme === "dark") {
     root.classList.add("dark");
@@ -37,13 +45,13 @@ export const applyTheme = () => {
   }
 };
 
-// Apply theme on initial load
 applyTheme();
 
 // Subscribe to theme changes to update the class
-useUiStore.subscribe(
-  (state) => state.theme,
-  applyTheme // Call applyTheme whenever the theme state changes
-);
+useUiStore.subscribe((state) => {
+  if (state.theme) {
+    applyTheme(); // Call applyTheme whenever the theme state changes
+  }
+});
 
 export default useUiStore;
