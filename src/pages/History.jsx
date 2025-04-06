@@ -1,12 +1,12 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import Receipt from './Receipt';
+import Receipt from './Receipt'; // Adjust the import path as necessary
 
 function History({ history }) {
   const navigate = useNavigate();
 
   const handleReceiptClick = (receipt) => {
-    navigate("/receipt", { state: { receipt } });
+    navigate("/Receipt", { state: { receipt } });
   };
 
 return (

@@ -154,6 +154,12 @@ function FileUploadPage() {
           onChange={handleFileInputChange}
           className="hidden"
           accept=".pdf, image/jpeg, image/png, image/gif" // Match allowed types
+          id="file-upload"
+          name="file-upload"
+        />
+        <label
+          htmlFor="file-upload"
+          className="block text-gray-600 text-sm font-semibold mb-2"
         />
         <FaUpload
           className={`mx-auto text-4xl mb-3 ${
