@@ -1,4 +1,4 @@
-// src/components/Receipt.jsx
+
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -14,7 +14,7 @@ const navigate = useNavigate();
     return (
       <div className="bg-white p-4 sm:p-6 w-1/2 rounded shadow-md ml-40 flex flex-col place-self-center z-0 mt-12">
         <h2 className="text-xl sm:text-2xl font-semibold mb-4 text-center">
-          Receipt
+          Print Receipt
         </h2>
         <p className="text-center text-gray-600">No receipt data available.</p>
         <div className="flex justify-center mt-4">

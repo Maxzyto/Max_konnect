@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import Receipt from './Receipt'; // Adjust the import path as necessary
+import Receipt from './Receipt'; 
 
 function History({ history }) {
   const navigate = useNavigate();
@@ -23,7 +23,7 @@ return (
                                       onClick={() => handleReceiptClick(item)}
                                       className="text-red-500"
                                  >
-                                      📄 {/* Changed icon to something more receipt-like */}
+                                      📄 
                                  </button>
                             </li>
                       ))}
