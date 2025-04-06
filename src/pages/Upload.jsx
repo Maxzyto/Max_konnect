@@ -1,6 +1,6 @@
 import React, { useState, useRef, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
-import useFileStore from "../store/fileStore"; // Ensure this path is correct
+import useFileStore from "../store/fileStore"; 
 import {
   FaUpload,
   FaTimesCircle,
@@ -12,7 +12,7 @@ import {
 const formatBytes = (bytes, decimals = 2) => {
   if (!+bytes) return "0 Bytes";
   const k = 1024;
-  const dm = decimals < 0 ? 0 : decimals;
+  const dm = decimals < 0 ? 0 : decimals; 
   const sizes = ["Bytes", "KB", "MB", "GB", "TB"];
   const i = Math.floor(Math.log(bytes) / Math.log(k));
   return `${parseFloat((bytes / Math.pow(k, i)).toFixed(dm))} ${sizes[i]}`;
@@ -106,11 +106,11 @@ function FileUploadPage() {
     setUploadingId(tempId); // Show spinner
     setError("");
 
-    // Simulate API call delay
+ 
     await new Promise((resolve) => setTimeout(resolve, 1500));
 
     const receiptId = confirmUpload(tempId); // Process in store
-    setUploadingId(null); // Hide spinner
+    setUploadingId(null); 
 
     if (receiptId) {
       // Navigate to the generated receipt page
