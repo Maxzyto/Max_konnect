@@ -49,7 +49,7 @@ const navigate = useNavigate();
   }
 
   return (
-    <div className="bg-white p-4 sm:p-6 rounded shadow-md">
+    <div className="bg-white p-4 sm:p-6 mt-10 w-screen rounded shadow-md">
       <h2 className="text-xl sm:text-2xl font-semibold mb-4 text-center">
         Receipt
       </h2>
